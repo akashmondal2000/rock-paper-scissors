@@ -18,7 +18,7 @@ const getPlayerChoice = () => {
 
   if (seclection !== ROCK && seclection !== PAPER && seclection !== SCISSORS) {
     alert(`Invalid Choice, We chose ${DEFAULT_USER_CHOICE} for you `);
-    return DEFAULT_USER_CHOICE;
+    return ; // return undefine or no value
   }
   return seclection;
 };
@@ -34,8 +34,9 @@ const getComputerChoice = () => {
   }
 };
 
-// here i find winner (player of Computer)
-const getWinner = (cChoice, pChoice) =>
+// here i find winner (player of Computer) 
+//first argument need to dfine (hare cChoice)
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) => //pChoice set to Default Argument 
   // cChoice is = computerChoice and pChoice is = playerChoice
   cChoice === pChoice
     ? RESULT_DRAW
@@ -51,11 +52,18 @@ startGameBtn.addEventListener("click", () => {
   }
   gameIsRunning = true;
   console.log("Game is starting...");
-  const playerChoice = getPlayerChoice();
+  const playerChoice = getPlayerChoice(); // might be undefined 
   const computerChoice = getComputerChoice();
 
-  const winner = getWinner(computerChoice, playerChoice);
-  let message = `You picked ${playerChoice}, Computer picked ${computerChoice}, there for you `;
+  let winner ;
+  if(playerChoice){
+     winner = getWinner(computerChoice, playerChoice);
+  }else{
+    winner = getWinner(computerChoice);
+  }
+
+  
+  let message = `You picked ${playerChoice ? playerChoice : DEFAULT_USER_CHOICE}, Computer picked ${computerChoice}, there for you `;
   if (winner === RESULT_DRAW){
     message = message+'had a draw'
   }else if (winner === RESULT_PLAYER_WINS){
